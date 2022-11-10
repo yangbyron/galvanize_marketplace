@@ -1,6 +1,6 @@
 module.exports = {
     dev:{
-        connectionString:'postgresql://postgres:docker@localhost:5432/user_db',
+        connectionString:'postgres://postgres:postgrespw@localhost:55000/user_db',
         PORT:3001
     },
     production:{
