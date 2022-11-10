@@ -6,6 +6,11 @@ body {
     grid-row-gap: 0px;
 }
     
-#Header { grid-area: 1 / 2 / 2 / 8; }
+#Header {
+grid-area: 1 / 2 / 2 / 8; 
+display:flex;
+justify-content: space-around;
+}
 #FilterBar { grid-area: 2 / 2 / 7 / 3; }
+
 #Results { grid-area: 2 / 3 / 7 / 8; }
