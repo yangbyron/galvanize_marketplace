@@ -17,6 +17,7 @@ app.get('/user/api/:id',(req,res)=>{
     .then(data=>res.send(data.rows));
 })
 app.post('/user/api',(req,res)=>{
+    console.log("creating a user")
     const body = req.body;
     client.query('INSERT INTO users (user_name, user_password, is_seller) VALUES ($1, $2, $3) returning *;',[body.user_name,body.user_password,body.is_seller])
     .then(data=>{
