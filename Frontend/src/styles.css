@@ -11,6 +11,26 @@ grid-area: 1 / 2 / 2 / 8;
 display:flex;
 justify-content: space-around;
 }
-#FilterBar { grid-area: 2 / 2 / 7 / 3; }
 
-#Results { grid-area: 2 / 3 / 7 / 8; }
+#FilterBar { 
+grid-area: 2 / 2 / 7 / 3;
+flex-direction: column;
+}
+
+#Results { 
+grid-area: 2 / 3 / 7 / 8;
+
+height: 100%;
+width: 100%;
+object-fit: cover;
+object-position: center center;
+padding:0rem;
+overflow:hidden;
+box-shadow: 0 2px 20px gray;
+border-radius :.2rem;
+display:flex;
+flex-direction: column;
+justify-content: space-between;
+transition: 200ms ease-in;
+}
+

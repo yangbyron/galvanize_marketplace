@@ -4,22 +4,14 @@ export default function Header() {
    //Header *
    //Category sidebar
    //Item mainbar
+   
   return (
-    <div>
       <div id='Header'>
-      <button>Home</button>
-      <input placeholder='Search' type='text'></input> 
-      <button>Login</button>
-        </div>
-          <div id='FilterBar' >
-            <button>Categories</button>
-            <button>Filter</button>
-            
-          </div>
-          <div id='Results'>
-
-          </div>
-    </div>
-    
+        <h1>Galvanize Marketplace</h1>
+        <button>Home</button>
+        <input placeholder='Search' type='text' id="searchBar"></input> 
+        <button>Search</button>
+        <button>Login</button>
+      </div>
   )
 }
