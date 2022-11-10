@@ -1,6 +1,6 @@
 module.exports = {
     dev: {
-        connectionString: 'postgres://postgres:postgrespw@localhost:55000/items_DB',
+        connectionString: 'postgres://postgres:postgrespw@localhost:55000/items_db',
         port: '4000'
     },
     production: {
