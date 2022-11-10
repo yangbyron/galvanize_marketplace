@@ -15,17 +15,17 @@ app.use(express.json());
 
 app.get('/api/items', (req, res) => {
     console.log('Get Request')
-    pool.query(`SELECT * FROM items_table;`)
+    pool.query(`SELECT * FROM items;`)
     .then(result => {
         res.send(result.rows);
     })
     .catch(e => console.log(e.stack));
 })
-app.post("/api/createItems/", (req, res) => {
+app.post("/api/createItems", (req, res) => {
     let createItem = req.query
     console.log(createItem);
-    pool.query(`INSERT INTO items ()
-    VALUES ();`)
+    pool.query(`INSERT INTO items (name, description, price, image_path, category, is_sold)
+    VALUES ($1, $2, $3, $4, $5, $6);`, [createItem.name, createItem.description, createItem.price, createItem.image_path, createItem.category, createItem.is_sold])
     .then(result => {
         res.send(result.rows);
     })
@@ -34,8 +34,8 @@ app.post("/api/createItems/", (req, res) => {
 
 app.delete('/api/deleteItems/:id', (req, res) => {
     let itemId = req.params.id;
-    console.log(itemId);
-    pool.query(`DELETE FROM items_table WHERE id = ${itemId}`)
+    console.log('Sold ID#', itemId);
+    pool.query(`DELETE FROM items WHERE item_id = ${itemId};`)
     .then(res.send('SOLD'))
     .catch(e => console.log(e.stack))
 })
