@@ -25,7 +25,7 @@ app.post("/api/createItems", (req, res) => {
     let createItem = req.query
     console.log(createItem);
     pool.query(`INSERT INTO items (name, description, price, image_path, category, is_sold)
-    VALUES ($1, $2, $3, $4, $5, $6);`, [createItem.name, createItem.description, createItem.price, createItem.image_path, createItem.category, createItem.is_sold])
+    VALUES ($1, $2, $3, $4, $5, $6);`, [createItem.name, createItem.description, createItem.price, createItem.image_path, createItem.category, false])
     .then(result => {
         res.send(result.rows);
     })
