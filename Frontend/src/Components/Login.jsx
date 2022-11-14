@@ -25,7 +25,7 @@ const Login = () => {
             <input type="password" required />
           </label>
 
-          <input type="submit" value="Submit" />
+          <button onClick={handleSubmit}>Submit</button>
 
       </form>
     </div>
