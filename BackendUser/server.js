@@ -14,7 +14,6 @@ client.connect();
 app.get('/user/api/:username',(req,res)=>{
     console.log("getting info")
     const username = req.params.username;
-    console.log(username);
     client.query('select * from users where user_name = $1;',[username])
     .then(data=>res.send(data.rows));
 })
