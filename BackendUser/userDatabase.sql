@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id SERIAL,
   user_name VARCHAR,
+  user_email VARCHAR,
   user_password VARCHAR,
   is_seller BOOLEAN
 );
