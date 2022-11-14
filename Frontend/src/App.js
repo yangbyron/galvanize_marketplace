@@ -12,9 +12,12 @@ function App() {
   
   return (
     <div className="App">
-      {loginClick?<Login setUser={()=>{setCurrentUser()}}/>:<><Header click={()=>{handleLoginClick()}}/>
+      {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
+      }} setUser={()=>{setCurrentUser()}}/>:<><Header click={()=>{handleLoginClick()}}/>
       <FilterBar />
       <Results /></>}
+
+
     </div>
   );
 }

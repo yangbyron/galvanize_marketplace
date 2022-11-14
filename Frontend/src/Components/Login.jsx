@@ -33,7 +33,7 @@ const Login = (props) => {
         </label>
 
         <button>Submit</button>
-
+        <button onClick={props.whenuserisclicking}>Cancel</button>
       </form>
     </div>
   )
