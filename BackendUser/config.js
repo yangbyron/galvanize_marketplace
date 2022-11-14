@@ -1,4 +1,5 @@
 module.exports = {
+    
     dev:{
         connectionString:'postgresql://postgres:docker@localhost:5432/user_db',
         PORT:3001
