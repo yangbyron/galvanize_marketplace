@@ -39,6 +39,7 @@ app.delete('/api/deleteItems/:id', (req, res) => {
     .then(res.send('SOLD'))
     .catch(e => console.log(e.stack))
 })
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
