@@ -6,8 +6,13 @@ const Login = () => {
       e.preventDefault()
       const userName = e.target["0"].value
 
-        fetch(`localhost:3001/user/api/:${userName}`)
+        fetch('http://localhost:3001/user/api/' + userName)
+        .then(response => response.json())
         .then((data) => {
+          console.log(typeof data)
+          if (data['0'] === undefined) {
+            alert("Account has not been created. Please create a account.")
+          }
           console.log(data)
         })
     }
@@ -25,7 +30,7 @@ const Login = () => {
             <input type="password" required />
           </label>
 
-          <button onClick={handleSubmit}>Submit</button>
+          <button>Submit</button>
 
       </form>
     </div>
