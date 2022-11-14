@@ -40,7 +40,7 @@ const Results = ({ items, filterBy }) => {
     }
   });
   //return the results div containing all the items that match the case requirements, which are specified by the filter buttons.
-  return <div id="Results">{itemsResult}</div>;
+  return <div className="results">{itemsResult}</div>;
 };
 
 export default Results;

@@ -13,7 +13,7 @@ export default function FilterBar({ filterBy, setFilterBy }) {
   if(showCategories){
     categoryResult = categoryList.map((categoryParam) => {
       //onClick fires the setFilterBy function that changes the category of the filterBy object.
-      return <li key={categoryParam}><button onClick={() => {setFilterBy({...filterBy, category: categoryParam})}}>{categoryParam}</button></li>
+      return <li  key={categoryParam}><button className='dropbutton' onClick={() => {setFilterBy({...filterBy, category: categoryParam})}}>{categoryParam}</button></li>
     })
   }
   //showPriceRanges is set to false. When true, it will show all price ranges. 
@@ -28,13 +28,13 @@ export default function FilterBar({ filterBy, setFilterBy }) {
   if(showPriceRanges){
     priceRangeResult = priceRanges.map((priceParam) => {
       //onClick fires the setFilterBy function that changes the price range value in the filterBy object.
-      return <li key={priceParam}><button onClick={() => {setFilterBy({...filterBy, priceRange: priceParam})}}>{priceParam}</button></li>
+      return <li  key={priceParam}><button className='dropbutton' onClick={() => {setFilterBy({...filterBy, priceRange: priceParam})}}>{priceParam}</button></li>
     })
   }
     
   return (
-    <div id='FilterBar' >
-      <button onClick={() => {
+    <div className="filterBar" >
+      <button className='button' onClick={() => {
         // toggle weather the categories are displayed or not
         setShowCategories(!showCategories)
         // changes the category value to an empty string in the filterBy object
@@ -45,8 +45,7 @@ export default function FilterBar({ filterBy, setFilterBy }) {
       </button>
 
       <ul>{categoryResult}</ul>
-
-      <button onClick={() => {
+      <button className='button'onClick={() => {
         // toggle weather the price ranges are displayed or not
         setShowPriceRanges(!showPriceRanges)
         // changes the price range value to an empty string in the filterBy object
@@ -55,8 +54,11 @@ export default function FilterBar({ filterBy, setFilterBy }) {
       >
         Filter By Price
       </button>
-
       <ul>{priceRangeResult}</ul>
+
+      <div>Category: {filterBy.category}</div>
+      <div>Price Range: {filterBy.priceRange}</div>
+      
     </div>
   )
 }

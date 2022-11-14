@@ -22,7 +22,7 @@ function App() {
   }, []);
   
   return (
-    <div className="App">
+    <div className="app">
       <Header />
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/>
