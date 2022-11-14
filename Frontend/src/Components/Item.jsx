@@ -1,10 +1,10 @@
 import React from "react";
 
 const Item = ({ item }) => {
-  let name = item.name
-  let description = item.description
-  let price = item.price
-  let image_path = item.image_path
+  let name = item.name;
+  let description = item.description;
+  let price = item.price;
+  let image_path = item.image_path;
 
   return (
     <div>
@@ -14,7 +14,7 @@ const Item = ({ item }) => {
       <div>{`$${price}`}</div>
       <button>Add to Cart</button>
     </div>
-  )  
+  );
 };
 
 export default Item;
