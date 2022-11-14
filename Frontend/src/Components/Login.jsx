@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 
 const Login = () => {
 
     const handleSubmit = (e) => {
-      console.log(e.target)
-      // useEffect(
-      //   fetch('localhost:3001/user/api/:id')
-      // )
+      e.preventDefault()
+      const userName = e.target["0"].value
+
+        fetch(`localhost:3001/user/api/:${userName}`)
+        .then((data) => {
+          console.log(data)
+        })
     }
 
   return (
     <div>Login Page
-      <form >
+      <form onSubmit={handleSubmit}>
           <label>
             User Name:
             <input type="text" name="name" required />
@@ -22,7 +25,7 @@ const Login = () => {
             <input type="password" required />
           </label>
 
-          <button onClick={handleSubmit}>Submit</button>
+          <input type="submit" value="Submit" />
 
       </form>
     </div>
