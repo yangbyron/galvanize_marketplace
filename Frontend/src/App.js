@@ -3,19 +3,22 @@ import FilterBar from "./Components/FilterBar";
 import Header from "./Components/Header";
 import Results from "./Components/Results";
 import Login from "./Components/Login"
+import Authentication from "./Components/Authentication"
+
+
 function App() {
   const [loginClick,setLoginClick] = useState(false);
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
-  
+
   return (
     <div className="App">
       {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
       }}/>:<><Header click={()=>{handleLoginClick()}}/>
       <FilterBar />
       <Results /></>}
-
+      <Authentication />
 
     </div>
   );
