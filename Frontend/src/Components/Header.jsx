@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-export default function Header() {
+export default function Header(props) {
    //Header *
    //Category sidebar
    //Item mainbar
@@ -19,7 +19,7 @@ export default function Header() {
         id="searchBar"
         ></input> 
         <button className='button'onClick={handleSearch}>Search</button>
-        <button className='button'>Login</button>
+        <button className='button' onClick={props.click}>Login</button>
       </div>
   )
 }

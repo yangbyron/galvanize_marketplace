@@ -11,11 +11,14 @@ const client = new Client ({
 })
 client.connect();
 
-app.get('/user/api/:id',(req,res)=>{
-    const id = req.params.id;
-    client.query('select * from users where id = $1;',[id])
+app.get('/user/api/:username',(req,res)=>{
+    console.log("getting info")
+    const username = req.params.username;
+    client.query('select * from users where user_name = $1;',[username])
     .then(data=>res.send(data.rows));
 })
+
+
 app.post('/user/api',(req,res)=>{
     console.log("creating a user")
     const body = req.body;
