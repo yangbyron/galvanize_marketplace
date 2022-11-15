@@ -3,6 +3,7 @@ import FilterBar from "./Components/FilterBar";
 import Header from "./Components/Header";
 import Results from "./Components/Results";
 import Login from "./Components/Login";
+import SearchBar from './Components/SearchBar';
 
 function App() {
   //the items state stores all of the information from the fetch call and the data is used to render all of the items
@@ -12,7 +13,7 @@ function App() {
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""})
-  
+  const [searchInput,setSearchInput] = useState('')
   const [loginClick,setLoginClick] = useState(false);
   function handleLoginClick(){
     setLoginClick(!loginClick);
@@ -30,9 +31,10 @@ function App() {
   return (
     <div className="app">
     {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
-      }}/>:<><Header click={()=>{handleLoginClick()}}/>
+      }}/>:<><Header click={()=>{handleLoginClick()} }setSearchInput={setSearchInput} searchInput={searchInput}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
+      <SearchBar items={items} searchInput={searchInput}/>
     </div>
   );
 }

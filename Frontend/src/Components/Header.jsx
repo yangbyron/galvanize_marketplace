@@ -4,11 +4,13 @@ export default function Header(props) {
    //Header *
    //Category sidebar
    //Item mainbar
-   const [searchInput,setSearchInput] = useState('')
-   const handleSearch = event => {
-      setSearchInput(event.target.value)
-      console.log('search value is',searchInput)
+  let searchValue = ''
+   const handleSearch = (e) => {
+      searchValue = e.target.value
+      console.log('search value is', searchValue)
+      
    }
+   const handleClick = () => {props.setSearchInput(searchValue)}
   return (
       <div className="header">
         <h1>Galvanize Marketplace</h1>
@@ -17,8 +19,9 @@ export default function Header(props) {
         placeholder='Search' 
         type='text' 
         id="searchBar"
+        onChange={handleSearch}
         ></input> 
-        <button className='button'onClick={handleSearch}>Search</button>
+        <button className='button'onClick={handleClick}>Search</button>
         <button className='button' onClick={props.click}>Login</button>
       </div>
   )
