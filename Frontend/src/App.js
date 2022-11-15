@@ -3,6 +3,7 @@ import FilterBar from "./Components/FilterBar";
 import Header from "./Components/Header";
 import Results from "./Components/Results";
 import Login from "./Components/Login";
+import Register from './Components/Register';
 
 function App() {
   //the items state stores all of the information from the fetch call and the data is used to render all of the items
@@ -11,13 +12,15 @@ function App() {
   //the user can only filter by one "category" at a time
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
-  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""})
-  
+  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
+  const [registerClick,setRegisterClick]=useState(false);
   const [loginClick,setLoginClick] = useState(false);
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
-
+  function handleRegisterClick(){
+    setRegisterClick(!registerClick);
+  }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
     fetch("http://localhost:4000/api/items")
@@ -29,7 +32,7 @@ function App() {
   
   return (
     <div className="app">
-    {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
+    {registerClick?<Register cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
       }}/>:<><Header click={()=>{handleLoginClick()}}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}

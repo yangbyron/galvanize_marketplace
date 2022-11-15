@@ -35,6 +35,10 @@ const Login = (props) => {
         <button>Submit</button>
         <button onClick={props.whenuserisclicking}>Cancel</button>
       </form>
+      <label>
+        Doesn't have an account?
+        <button onClick={props.clickRegister}>Register</button>
+      </label>
     </div>
   )
 }
