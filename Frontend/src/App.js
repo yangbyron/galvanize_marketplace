@@ -15,23 +15,28 @@ function App() {
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""})
   const [searchInput,setSearchInput] = useState('')
   const [loginClick,setLoginClick] = useState(false);
+  const [allItems,setAllItems] = useState([])
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
-
+  const handlesetItems = (input) =>{
+    setItems(input)
+  }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
     fetch("http://localhost:4000/api/items")
       .then((response) => response.json())
       .then((result) => {
-        setItems(result);
+        setItems(result)
+        setAllItems(result);
       });
   }, []);
   
   return (
     <div className="app">
     {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
-      }}/>:<><Header click={()=>{handleLoginClick()} }setSearchInput={setSearchInput} searchInput={searchInput}/>
+      }}/>:<>
+      <Header click={()=>{handleLoginClick()} } handlesetItems={handlesetItems} allItems={allItems}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
       <SearchBar items={items} searchInput={searchInput}/>
