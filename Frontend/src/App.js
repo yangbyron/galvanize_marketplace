@@ -13,14 +13,14 @@ function App() {
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
   
-  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""})
-  const [searchInput,setSearchInput] = useState('')
-  const [registerClick,setRegisterClick]=useState(false)
+  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
+  const [registerClick,setRegisterClick]=useState(false);
   const [loginClick,setLoginClick] = useState(false);
   const [allItems,setAllItems] = useState([])
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
+
   const handlesetItems = (input) =>{
     setItems(input)
   }
@@ -38,12 +38,11 @@ function App() {
         setAllItems(result);
       });
   }, []);
-
+  
   return (
     <div className="app">
-    {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
-      }}/>:<>
-      <Header click={()=>{handleLoginClick()} } handlesetItems={handlesetItems} allItems={allItems}/>
+    {registerClick?<Register cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
+      }}/>:<><Header click={()=>{handleLoginClick()}} handlesetItems={handlesetItems} allItems={allItems}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
     </div>
