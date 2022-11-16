@@ -8,13 +8,13 @@ import { initializeApp } from 'firebase/app'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 function App() {
   const firebaseConfig = {
-    apiKey: "AIzaSyBqf6dwDKhTz694zwzspuIo7-BIGiUvRXI",
-    authDomain: "galvanize-marketplace-5beb0.firebaseapp.com",
-    projectId: "galvanize-marketplace-5beb0",
-    storageBucket: "galvanize-marketplace-5beb0.appspot.com",
-    messagingSenderId: "363673543140",
-    appId: "1:363673543140:web:547ace5dbdbabb0281e7f1",
-    measurementId: "G-YYGFB6QEFB"
+    apiKey: process.env.REACT_APP_APIKEY,
+    authDomain: process.env.REACT_APP_AUTHDOMAIN,
+    projectId: process.env.REACT_APP_PROJECTID,
+    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+    appId: process.env.REACT_APP_APPID,
+    measurementId: process.env.REACT_APP_MEASUREMENTID
   };
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -46,7 +46,6 @@ function App() {
     setCurrentUser(oldUser=>user);
   }
   function registerUser(email,password){
-    console.log('haha0');
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
