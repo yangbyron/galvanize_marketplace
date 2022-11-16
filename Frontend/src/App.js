@@ -15,6 +15,7 @@ function App() {
   
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""})
   const [searchInput,setSearchInput] = useState('')
+  const [registerClick,setRegisterClick]=useState(false)
   const [loginClick,setLoginClick] = useState(false);
   const [allItems,setAllItems] = useState([])
   function handleLoginClick(){
@@ -22,6 +23,11 @@ function App() {
   }
   const handlesetItems = (input) =>{
     setItems(input)
+  }
+
+  function handleRegisterClick(){
+    setRegisterClick(!registerClick);
+
   }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
