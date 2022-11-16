@@ -13,20 +13,15 @@ function App() {
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
   
-  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
-  const [registerClick,setRegisterClick]=useState(false);
+  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""})
+  const [searchInput,setSearchInput] = useState('')
   const [loginClick,setLoginClick] = useState(false);
   const [allItems,setAllItems] = useState([])
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
-
   const handlesetItems = (input) =>{
     setItems(input)
-
-  function handleRegisterClick(){
-    setRegisterClick(!registerClick);
-
   }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
@@ -37,14 +32,14 @@ function App() {
         setAllItems(result);
       });
   }, []);
-  
+
   return (
     <div className="app">
-    {registerClick?<Register cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
-      }}/>:<><Header click={()=>{handleLoginClick()}} handlesetItems={handlesetItems} allItems={allItems}/>
+    {loginClick?<Login whenuserisclicking={() => {handleLoginClick()
+      }}/>:<>
+      <Header click={()=>{handleLoginClick()} } handlesetItems={handlesetItems} allItems={allItems}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
-      <SearchBar items={items} searchInput={searchInput}/>
     </div>
   );
 }
