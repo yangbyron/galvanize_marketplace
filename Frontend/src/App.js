@@ -24,22 +24,34 @@ function App() {
   //the user can only filter by one "category" at a time
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
+  
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
   const [registerClick,setRegisterClick]=useState(false);
   const [loginClick,setLoginClick] = useState(false);
+
   const [currentUser,setCurrentUser]=useState({});
+
+  const [allItems,setAllItems] = useState([])
+
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
+
+  const handlesetItems = (input) =>{
+    setItems(input)
+  }
+
   function handleRegisterClick(){
     setRegisterClick(!registerClick);
+
   }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
     fetch("http://localhost:4000/api/items")
       .then((response) => response.json())
       .then((result) => {
-        setItems(result);
+        setItems(result)
+        setAllItems(result);
       });
   }, []);
   function handleChangeCurrentUser(user){
@@ -61,10 +73,11 @@ function App() {
   }
   return (
     <div className="app">
+
     {currentUser.uid?<><div>Hello {currentUser.email}</div><Header click={()=>{handleLoginClick()}}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>:registerClick?<Register registerUser={(email,password)=>registerUser(email,password)} cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
-      }}/>:<><Header click={()=>{handleLoginClick()}}/>
+      }}/>:<><Header click={()=>{handleLoginClick()}} handlesetItems={handlesetItems} allItems={allItems}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
     </div>
