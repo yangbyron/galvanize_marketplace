@@ -74,7 +74,7 @@ function App() {
   return (
     <div className="app">
 
-    {currentUser.uid?<><div>Hello {currentUser.email}</div><Header click={()=>{handleLoginClick()}}/>
+    {currentUser.uid?<><div>Hello {currentUser.email}</div><Header click={()=>{handleLoginClick()}} handlesetItems={handlesetItems} allItems={allItems}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>:registerClick?<Register registerUser={(email,password)=>registerUser(email,password)} cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
       }}/>:<><Header click={()=>{handleLoginClick()}} handlesetItems={handlesetItems} allItems={allItems}/>
