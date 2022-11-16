@@ -22,7 +22,7 @@ app.get('/user/api/:username',(req,res)=>{
 app.post('/user/api',(req,res)=>{
     console.log("creating a user")
     const body = req.body;
-    client.query('INSERT INTO users (user_name, user_password, is_seller) VALUES ($1, $2, $3) returning *;',[body.user_name,body.user_password,body.is_seller])
+    client.query('INSERT INTO users (user_name, user_email, is_seller) VALUES ($1, $2, $3) returning *;',[body.user_name,body.user_email,body.is_seller])
     .then(data=>{
         res.end();
     });
