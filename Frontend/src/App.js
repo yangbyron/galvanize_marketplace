@@ -23,6 +23,7 @@ function App() {
 
   const handlesetItems = (input) =>{
     setItems(input)
+  }
 
   function handleRegisterClick(){
     setRegisterClick(!registerClick);
@@ -44,7 +45,6 @@ function App() {
       }}/>:<><Header click={()=>{handleLoginClick()}} handlesetItems={handlesetItems} allItems={allItems}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
-      <SearchBar items={items} searchInput={searchInput}/>
     </div>
   );
 }
