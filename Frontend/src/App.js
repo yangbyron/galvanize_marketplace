@@ -4,8 +4,20 @@ import Header from "./Components/Header";
 import Results from "./Components/Results";
 import Login from "./Components/Login";
 import Register from './Components/Register';
-
+import { initializeApp } from 'firebase/app'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 function App() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBqf6dwDKhTz694zwzspuIo7-BIGiUvRXI",
+    authDomain: "galvanize-marketplace-5beb0.firebaseapp.com",
+    projectId: "galvanize-marketplace-5beb0",
+    storageBucket: "galvanize-marketplace-5beb0.appspot.com",
+    messagingSenderId: "363673543140",
+    appId: "1:363673543140:web:547ace5dbdbabb0281e7f1",
+    measurementId: "G-YYGFB6QEFB"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
   //the items state stores all of the information from the fetch call and the data is used to render all of the items
   const [items, setItems] = useState([]);
   //the filterBy state is an object that stores all of the categories that the items object can be filtered by
@@ -15,6 +27,7 @@ function App() {
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
   const [registerClick,setRegisterClick]=useState(false);
   const [loginClick,setLoginClick] = useState(false);
+  const [currentUser,setCurrentUser]=useState({});
   function handleLoginClick(){
     setLoginClick(!loginClick);
   }
@@ -29,10 +42,29 @@ function App() {
         setItems(result);
       });
   }, []);
-  
+  function handleChangeCurrentUser(user){
+    setCurrentUser(oldUser=>user);
+  }
+  function registerUser(email,password){
+    console.log('haha0');
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user)
+      handleChangeCurrentUser(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode + errorMessage);
+    });
+  }
   return (
     <div className="app">
-    {registerClick?<Register cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
+    {currentUser.uid?<><div>Hello {currentUser.email}</div><Header click={()=>{handleLoginClick()}}/>
+      <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
+      <Results items={items} filterBy={filterBy}/></>:registerClick?<Register registerUser={(email,password)=>registerUser(email,password)} cancel={()=>{handleRegisterClick()}}/>:loginClick?<Login clickRegister={()=>{handleRegisterClick()}} whenuserisclicking={()=>{handleLoginClick()
       }}/>:<><Header click={()=>{handleLoginClick()}}/>
       <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
       <Results items={items} filterBy={filterBy}/></>}
