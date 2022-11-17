@@ -22,16 +22,16 @@ const Login = ({ setCurrentUser }) => {
     //   })
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      setCurrentUser(userCredential.user);
-      alert("You have been authenticated successfully.")
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert("Invalid user credentials. Please try again or register for an account.")
-    });
+      .then((userCredential) => {
+        // Signed in 
+        setCurrentUser(userCredential.user);
+        alert("You have been authenticated successfully.")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("Invalid user credentials. Please try again or register for an account.")
+      });
   }
 
   const emailRef = useRef();
@@ -60,7 +60,6 @@ const Login = ({ setCurrentUser }) => {
         <Link to="/register">
           <button>Register</button>
         </Link>
-        <Link to="/">Back to Home</Link>
       </label>
     </div>
   )
