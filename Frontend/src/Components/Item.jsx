@@ -1,6 +1,6 @@
 import React from "react";
 
-const Item = ({ item }) => {
+const Item = ({ item, addToCart }) => {
   let name = item.name;
   let description = item.description;
   let price = item.price;
@@ -9,10 +9,10 @@ const Item = ({ item }) => {
   return (
     <div>
       <h2>{name}</h2>
-      <img src={image_path}></img>
+      <img src={image_path} alt={image_path}></img>
       <p>{description}</p>
       <div>{`$${price}`}</div>
-      <button>Add to Cart</button>
+      <button onClick={() => { addToCart(item.item_id) }}>Add to Cart</button>
     </div>
   );
 };

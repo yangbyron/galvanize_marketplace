@@ -30,10 +30,10 @@ export default function Header(props) {
 
   let loginOrLogout = props.currentUser.uid ?
     (<>
-      <button className='button' onClick={signOutHandler}>Logout</button>
       <Link to="/checkout">
-          <button className='button'>Cart</button>
+        <button className='button'>Cart</button>
       </Link>
+      <button className='button' onClick={signOutHandler}>Logout</button>
     </>) :
     (<Link to="/login">
       <button className='button'>Login</button>

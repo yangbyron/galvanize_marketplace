@@ -31,10 +31,30 @@ function App() {
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
   const [currentUser,setCurrentUser]=useState({});
   const [allItems,setAllItems] = useState([])
+  const [cart, setCart] = useState([])
 
   const handlesetItems = (input) =>{
     setItems(input)
   }
+
+  function addToCart(newItem){
+    //post request to DB to add user_id & item_id
+    //get request to setCart
+    
+    const cartItems = {
+      user_id:currentUser.uid,
+      item_id:newItem
+    }
+    fetch('http://localhost:4000/api/cart',{
+      method:'POST',
+      headers:{'Content-Type':'Application/JSON'},
+      body:JSON.stringify(cartItems)
+    })
+    .then(fetch('http://localhost:4000/api/cart/'+ currentUser.uid) 
+      .then((result) => result.json())
+      .then((data) => setCart(oldCart => data))
+      .then(console.log(cart)))
+  }  
 
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
@@ -72,7 +92,7 @@ function App() {
           <>
             <Header handlesetItems={handlesetItems} allItems={allItems} setCurrentUser={setCurrentUser} currentUser={currentUser} />
             <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
-            <Results items={items} filterBy={filterBy}/>
+            <Results items={items} filterBy={filterBy} addToCart={addToCart}/>
           </>
         } />
         <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />

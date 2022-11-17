@@ -40,6 +40,21 @@ app.delete('/api/deleteItems/:id', (req, res) => {
     .catch(e => console.log(e.stack))
 })
 
+app.get('/api/cart/:id', (req, res) => {
+    let id = req.params.id
+    pool.query(`SELECT * FROM cart WHERE user_id=($1)`,[id])
+    .then((results) =>  {
+        res.send(results.rows)
+    })
+    .catch(e => console.log(e.stack));
+})
+app.post('/api/cart', (req, res) => {
+    pool.query(`INSERT INTO cart (user_id,item_id) VALUES ($1,$2)`, [req.body.user_id,req.body.item_id])
+    .then(result => {
+        res.end()
+    })
+})
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });

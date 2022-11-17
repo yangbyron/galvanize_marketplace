@@ -48,7 +48,7 @@ const Login = ({ setCurrentUser }) => {
           Password:
           <input ref={passwordRef} type="password" required />
         </label>
-        <Link onClick={handleSubmit} to="/">
+        <Link to="/" onClick={handleSubmit}>
           <button>Submit</button>
         </Link>
         <Link to="/">
