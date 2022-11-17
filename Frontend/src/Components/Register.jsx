@@ -23,7 +23,7 @@ const Register = (props) => {
                 },
                 body: JSON.stringify(newUser)
             })
-            .then(alert("account created successfully"))
+                .then(alert("account created successfully"))
             // .then(window.open="/")
         }
     }
@@ -31,8 +31,8 @@ const Register = (props) => {
         <form onSubmit={handleSubmit}>
             <input type='text' placeholder="username" required />
             <input type='email' placeholder="email" required />
-            <input type='password' placeholder="password" minlength="6" required />
-            <input type='password' placeholder="confirm password" minlength="6" required />
+            <input type='password' placeholder="password" minLength="6" required />
+            <input type='password' placeholder="confirm password" minLength="6" required />
             <select required defaultValue={false}>
                 <option value={false}>buyer</option>
                 <option value={true}>seller</option>
@@ -41,7 +41,6 @@ const Register = (props) => {
             <Link to="/">
                 <button>Cancel</button>
             </Link>
-            <Link to="/">Back to Home</Link>
         </form>
     )
 }
