@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 
 export default function Header(props) {
   //Header *
@@ -28,7 +29,9 @@ export default function Header(props) {
         onChange={handleSearch}
       ></input>
       <button className='button' onClick={handleClick}>Search</button>
-      <button className='button' onClick={props.click}>Login</button>
+      <Link to="/login">
+        <button className='button'>Login</button>
+      </Link>
     </div>
   )
 }
