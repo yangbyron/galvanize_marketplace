@@ -44,3 +44,4 @@ const Results = ({ items, filterBy }) => {
 };
 
 export default Results;
+

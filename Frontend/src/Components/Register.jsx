@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 
 const Register = (props) => {
     function handleSubmit(e) {
@@ -22,6 +23,8 @@ const Register = (props) => {
                 },
                 body: JSON.stringify(newUser)
             })
+            .then(alert("account created successfully"))
+            // .then(window.open="/")
         }
     }
     return (
@@ -35,7 +38,10 @@ const Register = (props) => {
                 <option value={true}>seller</option>
             </select>
             <input type='submit' />
-            <button onClick={props.cancel}>Cancel</button>
+            <Link to="/">
+                <button>Cancel</button>
+            </Link>
+            <Link to="/">Back to Home</Link>
         </form>
     )
 }
