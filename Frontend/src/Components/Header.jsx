@@ -7,7 +7,6 @@ export default function Header(props) {
   let searchValue = ''
   const handleSearch = (e) => {
     searchValue = e.target.value
-    console.log('search value is', searchValue)
   }
   const handleClick = () => {
     //get copy of old items
@@ -15,7 +14,6 @@ export default function Header(props) {
       item.name.toLowerCase().includes(searchValue.toLowerCase())
     )
     props.handlesetItems(itemsName)
-    console.log(itemsName)
   }
   return (
     <div className="header">
@@ -28,7 +26,7 @@ export default function Header(props) {
         onChange={handleSearch}
       ></input>
       <button className='button' onClick={handleClick}>Search</button>
-      <button className='button' onClick={props.click}>Login</button>
+       {props.currentUser ? <div><button className='button' >Cart</button> <button className='button' onClick={props.logout}>Logout</button></div>   : <button className='button' onClick={props.click}>Login</button>}
     </div>
   )
 }
