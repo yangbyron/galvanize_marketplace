@@ -4,6 +4,7 @@ import FilterBar from './Components/FilterBar';
 import Results from './Components/Results';
 import Login from "./Components/Login";
 import Register from './Components/Register';
+import CheckoutPage from './Components/CheckoutPage'
 import { initializeApp } from 'firebase/app'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Route, Routes } from 'react-router-dom'
@@ -63,19 +64,20 @@ function App() {
       console.log(errorCode + errorMessage);
     });
   }
+
   return (
     <div className="app">
       <Routes>
         <Route path="/" element={
           <>
-            <div>Hello {currentUser.email}</div>
-            <Header handlesetItems={handlesetItems} allItems={allItems}/>
+            <Header handlesetItems={handlesetItems} allItems={allItems} setCurrentUser={setCurrentUser} currentUser={currentUser} />
             <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
             <Results items={items} filterBy={filterBy}/>
           </>
         } />
         <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
         <Route path="/register" element={<Register registerUser={(email,password)=>registerUser(email,password)} />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </div>
 
