@@ -14,7 +14,7 @@ CREATE TABLE cart(
     user_id TEXT,
     item_id INTEGER,
     CONSTRAINT fk_item_id FOREIGN KEY (item_id)
-    REFERENCES items(item_id)
+    REFERENCES items(item_id) ON DELETE CASCADE
 );
 
 INSERT INTO items (name, description, price, image_path, category, is_sold)

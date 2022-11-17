@@ -33,6 +33,7 @@ function App() {
   const [allItems,setAllItems] = useState([])
   const [cart, setCart] = useState([])
 
+
   const handlesetItems = (input) =>{
     setItems(input)
   }
@@ -40,7 +41,6 @@ function App() {
   function addToCart(newItem){
     //post request to DB to add user_id & item_id
     //get request to setCart
-    
     const cartItems = {
       user_id:currentUser.uid,
       item_id:newItem
@@ -50,12 +50,13 @@ function App() {
       headers:{'Content-Type':'Application/JSON'},
       body:JSON.stringify(cartItems)
     })
-    .then(fetch('http://localhost:4000/api/cart/'+ currentUser.uid) 
-      .then((result) => result.json())
-      .then((data) => setCart(oldCart => data))
-      .then(console.log(cart)))
   }  
-
+  const renderCheckoutPage  = () => {
+    fetch('http://localhost:4000/api/cart/'+ currentUser.uid) 
+    .then((result) => result.json())
+    .then((data) => {setCart(oldCart => (data))
+    })
+  }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
     fetch("http://localhost:4000/api/items")
@@ -75,7 +76,6 @@ function App() {
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
-      console.log(user)
       handleChangeCurrentUser(user);
     })
     .catch((error) => {
@@ -90,14 +90,14 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <Header handlesetItems={handlesetItems} allItems={allItems} setCurrentUser={setCurrentUser} currentUser={currentUser} />
+            <Header handlesetItems={handlesetItems} allItems={allItems} setCurrentUser={setCurrentUser} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>
             <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
             <Results items={items} filterBy={filterBy} addToCart={addToCart}/>
           </>
         } />
         <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
         <Route path="/register" element={<Register registerUser={(email,password)=>registerUser(email,password)} />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/checkout" element={<CheckoutPage cart={cart} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>} />
       </Routes>
     </div>
 

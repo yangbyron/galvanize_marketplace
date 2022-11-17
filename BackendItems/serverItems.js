@@ -41,8 +41,9 @@ app.delete('/api/deleteItems/:id', (req, res) => {
 })
 
 app.get('/api/cart/:id', (req, res) => {
+    console.log('sending cart data back')
     let id = req.params.id
-    pool.query(`SELECT * FROM cart WHERE user_id=($1)`,[id])
+    pool.query(`select * from items inner join cart on cart.item_id=items.item_id where cart.user_id=($1)`,[id])
     .then((results) =>  {
         res.send(results.rows)
     })
@@ -51,6 +52,13 @@ app.get('/api/cart/:id', (req, res) => {
 app.post('/api/cart', (req, res) => {
     pool.query(`INSERT INTO cart (user_id,item_id) VALUES ($1,$2)`, [req.body.user_id,req.body.item_id])
     .then(result => {
+        res.end()
+    })
+})
+app.delete('/api/cart/', (req,res) =>{
+    console.log(req.body)
+    pool.query('DELETE from cart WHERE user_id=($1) AND item_id=($2)',[req.body.user_id,req.body.item_id])
+    .then(results =>{
         res.end()
     })
 })

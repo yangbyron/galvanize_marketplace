@@ -17,7 +17,6 @@ export default function Header(props) {
   let searchValue = ''
   const handleSearch = (e) => {
     searchValue = e.target.value
-    console.log('search value is', searchValue)
   }
   const handleClick = () => {
     //get copy of old items
@@ -31,7 +30,7 @@ export default function Header(props) {
   let loginOrLogout = props.currentUser.uid ?
     (<>
       <Link to="/checkout">
-        <button className='button'>Cart</button>
+        <button className='button'onClick={props.renderCheckoutPage}>Cart</button>
       </Link>
       <button className='button' onClick={signOutHandler}>Logout</button>
     </>) :
