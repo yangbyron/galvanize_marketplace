@@ -41,6 +41,7 @@ const Register = (props) => {
             <Link to="/">
                 <button>Cancel</button>
             </Link>
+            <Link to="/">Back to Home</Link>
         </form>
     )
 }

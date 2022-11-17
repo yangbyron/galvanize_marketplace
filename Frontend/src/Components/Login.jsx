@@ -60,6 +60,7 @@ const Login = ({ setCurrentUser }) => {
         <Link to="/register">
           <button>Register</button>
         </Link>
+        <Link to="/">Back to Home</Link>
       </label>
     </div>
   )

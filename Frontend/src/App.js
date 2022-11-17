@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Home from "./Components/Home"
 import Header from "./Components/Header";
 import FilterBar from './Components/FilterBar';
 import Results from './Components/Results';
