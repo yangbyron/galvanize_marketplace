@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
-import FilterBar from './Components/FilterBar';
-import Results from './Components/Results';
+import FilterBar from "./Components/FilterBar";
+import Results from "./Components/Results";
 import Login from "./Components/Login";
-import Register from './Components/Register';
-import CheckoutPage from './Components/CheckoutPage'
-import { initializeApp } from 'firebase/app'
+import Register from "./Components/Register";
+import CheckoutPage from "./Components/CheckoutPage";
+import SellerPage from "./Components/SellerPage";
+import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const firebaseConfig = {
@@ -17,7 +18,7 @@ function App() {
     storageBucket: process.env.REACT_APP_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
     appId: process.env.REACT_APP_APPID,
-    measurementId: process.env.REACT_APP_MEASUREMENTID
+    measurementId: process.env.REACT_APP_MEASUREMENTID,
   };
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -28,59 +29,84 @@ function App() {
   //the user can only filter by one "category" at a time
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
-  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
-  const [currentUser,setCurrentUser]=useState({});
-  const [allItems,setAllItems] = useState([])
+  const [filterBy, setFilterBy] = useState({ category: "", priceRange: "" });
+  const [currentUser, setCurrentUser] = useState({});
+  const [allItems, setAllItems] = useState([]);
+  const [isSeller, setIsSeller] = useState(false);
 
-  const handlesetItems = (input) =>{
-    setItems(input)
-  }
+  const handlesetItems = (input) => {
+    setItems(input);
+  };
 
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
     fetch("http://localhost:4000/api/items")
       .then((response) => response.json())
       .then((result) => {
-        setItems(result)
+        setItems(result);
         setAllItems(result);
       });
   }, []);
 
-  function handleChangeCurrentUser(user){
-    setCurrentUser(oldUser=>user);
+  function handleChangeCurrentUser(user) {
+    setCurrentUser((oldUser) => user);
   }
 
-  function registerUser(email,password){
+  function registerUser(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log(user)
-      handleChangeCurrentUser(user);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode + errorMessage);
-    });
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        handleChangeCurrentUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + errorMessage);
+      });
   }
+  let renderBuyerOrSellerPage = isSeller ? (
+    <Route path="/" element={<SellerPage setCurrentUser={setCurrentUser}/>} />
+  ) : (
+    <Route
+      path="/"
+      element={
+        <>
+          <Header
+            handlesetItems={handlesetItems}
+            allItems={allItems}
+            setCurrentUser={setCurrentUser}
+            currentUser={currentUser}
+          />
+          <FilterBar setFilterBy={setFilterBy} filterBy={filterBy} />
+          <Results items={items} filterBy={filterBy} />
+        </>
+      }
+    />
+  );
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={
-          <>
-            <Header handlesetItems={handlesetItems} allItems={allItems} setCurrentUser={setCurrentUser} currentUser={currentUser} />
-            <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
-            <Results items={items} filterBy={filterBy}/>
-          </>
-        } />
-        <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
-        <Route path="/register" element={<Register registerUser={(email,password)=>registerUser(email,password)} />} />
+        {renderBuyerOrSellerPage}
+        <Route
+          path="/login"
+          element={
+            <Login setCurrentUser={setCurrentUser} setIsSeller={setIsSeller} />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Register
+              registerUser={(email, password) => registerUser(email, password)}
+            />
+          }
+        />
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </div>
-
   );
 }
 

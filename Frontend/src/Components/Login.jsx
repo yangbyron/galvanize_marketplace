@@ -2,29 +2,26 @@ import React, { useRef } from 'react'
 import { Link } from "react-router-dom"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 
-const Login = ({ setCurrentUser }) => {
+const Login = ({ setCurrentUser, setIsSeller }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const email = emailRef.current.value
     const password = passwordRef.current.value
 
-    // fetch('http://localhost:3001/user/api/' + userName)
-    //   .then(response => response.json())
-    //   .then((data) => {
-    //     if (data['0'] === undefined) {
-    //       alert('Account has not been created. Please create an account.');
-    //     }
-    //     const password = e.target['1'].value;
-    //     if (password !== data[0].user_password) {
-    //       alert('sorry, the username and password does\'t match what we have on file');
-    //     }
-    //   })
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
       setCurrentUser(userCredential.user);
+      
+        fetch('http://localhost:3001/user/api/' + userCredential.user.email)
+            .then(response => response.json())
+            .then((data) => {
+              setIsSeller(data[0].is_seller)
+              //console.log(userCredential.user)
+            })
+       
       alert("You have been authenticated successfully.")
     })
     .catch((error) => {
