@@ -19,6 +19,7 @@ function App() {
     appId: process.env.REACT_APP_APPID,
     measurementId: process.env.REACT_APP_MEASUREMENTID
   };
+  
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 

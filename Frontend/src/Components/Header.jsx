@@ -19,6 +19,7 @@ export default function Header(props) {
     searchValue = e.target.value
     console.log('search value is', searchValue)
   }
+
   const handleClick = () => {
     //get copy of old items
     const itemsName = props.allItems.filter((item) =>
@@ -29,33 +30,34 @@ export default function Header(props) {
   }
 
   let loginOrLogout = props.currentUser.uid ?
-    (<>
-      <button className='button' onClick={signOutHandler}>Logout</button>
+    (<div className="topRightCorner">
       <Link to="/checkout">
-          <button className='button'>Cart</button>
+        <button className='button'>Cart</button>
       </Link>
-    </>) :
+      <button className='button' onClick={signOutHandler}>Logout</button>
+    </div>) :
     (<Link to="/login">
-      <button className='button'>Login</button>
+      <button className='button topRightCorner'>Login</button>
     </Link>)
 
   let displayCurrentUser = props.currentUser.uid ?
-    <div>Hello {props.currentUser.email}</div> :
+    <div className='topLeftCorner'>Hello {props.currentUser.email}</div> :
     <div></div>
 
   return (
-    <div className="header">
-      <h1>Galvanize Marketplace</h1>
+    <>
       {displayCurrentUser}
-      <button className='button'>Home</button>
-      <input
-        placeholder='Search'
-        type='text'
-        id="searchBar"
-        onChange={handleSearch}
-      ></input>
-      <button className='button' onClick={handleClick}>Search</button>
+      <div className="header">
+        <h1>Galvanize Marketplace</h1>
+        <input
+          placeholder='Search'
+          type='text'
+          id="searchBar"
+          onChange={handleSearch}
+        ></input>
+        <button className='button' onClick={handleClick}>Search</button>
+      </div>
       {loginOrLogout}
-    </div>
+    </>
   )
 }

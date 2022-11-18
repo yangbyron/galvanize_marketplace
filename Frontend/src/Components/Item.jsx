@@ -7,9 +7,9 @@ const Item = ({ item }) => {
   let image_path = item.image_path;
 
   return (
-    <div>
+    <div className="item">
       <h2>{name}</h2>
-      <img src={image_path}></img>
+      <img className='img' src={image_path}></img>
       <p>{description}</p>
       <div>{`$${price}`}</div>
       <button>Add to Cart</button>
