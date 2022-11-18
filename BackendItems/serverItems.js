@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.get('/api/items', (req, res) => {
     console.log('Get Request')
-    pool.query(`SELECT * FROM items;`)
+    pool.query(`SELECT * FROM items WHERE is_sold=false;`)
     .then(result => {
         res.send(result.rows);
     })
@@ -31,7 +31,18 @@ app.post("/api/createItems", (req, res) => {
     })
     .catch(e => console.log(e.stack));
 });
-
+app.patch('/api/checkout',(req,res) => {
+    req.body.map(id=>{
+    pool.query(`update items set is_sold=true where item_id=($1);`,[id])
+    })
+    res.end()
+})
+app.delete('/api/deleteAll', (req, res) => {
+    pool.query(`DELETE FROM cart;`)
+    .then(result =>{
+        res.end()
+    })
+})
 app.delete('/api/deleteItems/:id', (req, res) => {
     let itemId = req.params.id;
     console.log('Sold ID#', itemId);
@@ -62,6 +73,7 @@ app.delete('/api/cart/', (req,res) =>{
         res.end()
     })
 })
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

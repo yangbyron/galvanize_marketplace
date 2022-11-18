@@ -97,7 +97,7 @@ function App() {
         } />
         <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
         <Route path="/register" element={<Register registerUser={(email,password)=>registerUser(email,password)} />} />
-        <Route path="/checkout" element={<CheckoutPage cart={cart} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>} />
+        <Route path="/checkout" element={<CheckoutPage setCart={setCart} cart={cart} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>} />
       </Routes>
     </div>
 
