@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS items_db;
 CREATE DATABASE items_db;
 
-DROP TABLE IF EXISTS items, checkout;
+DROP TABLE IF EXISTS items;
 
 CREATE TABLE items (
     item_id SERIAL PRIMARY KEY,
@@ -10,7 +10,8 @@ CREATE TABLE items (
     price DECIMAL(8, 2) NOT NULL,
     image_path VARCHAR(255) NOT NULL,
     category VARCHAR(30) NOT NULL,
-    is_sold BOOLEAN
+    is_sold BOOLEAN,
+    user_email VARCHAR(20)
 );
 
 

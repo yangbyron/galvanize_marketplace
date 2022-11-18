@@ -67,7 +67,7 @@ function App() {
       });
   }
   let renderBuyerOrSellerPage = isSeller ? (
-    <Route path="/" element={<SellerPage setCurrentUser={setCurrentUser}/>} />
+    <Route path="/" element={<SellerPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
   ) : (
     <Route
       path="/"

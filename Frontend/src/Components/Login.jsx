@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 
 const Login = ({ setCurrentUser, setIsSeller }) => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -30,9 +32,6 @@ const Login = ({ setCurrentUser, setIsSeller }) => {
       alert("Invalid user credentials. Please try again or register for an account.")
     });
   }
-
-  const emailRef = useRef();
-  const passwordRef = useRef();
 
   return (
     <div>Login Page
