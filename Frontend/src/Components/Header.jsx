@@ -32,30 +32,30 @@ export default function Header(props) {
   let loginOrLogout = props.currentUser.uid ?
     (<div className="topRightCorner">
       <Link to="/checkout">
-        <button className='button'>Cart</button>
+        <button className='headerbutton'>Cart</button>
       </Link>
-      <button className='button' onClick={signOutHandler}>Logout</button>
+      <button className='headerbutton' onClick={signOutHandler}>Logout</button>
     </div>) :
-    (<Link to="/login">
-      <button className='button topRightCorner'>Login</button>
+    (<Link to="/login" className='setOrange'>
+      <button className='headerbutton'>Login</button>
     </Link>)
 
   let displayCurrentUser = props.currentUser.uid ?
     <div className='topLeftCorner'>Hello {props.currentUser.email}</div> :
-    <div></div>
+    <div className='setOrange'></div>
 
   return (
     <>
       {displayCurrentUser}
       <div className="header">
-        <h1>Galvanize Marketplace</h1>
+        <h1 className='galMar'>Galvanize Marketplace</h1>
+        <button className='headerbutton' onClick={handleClick}>Search</button>
         <input
-          placeholder='Search'
+          placeholder='🔎 Search '
           type='text'
-          id="searchBar"
+          id='searchBar'
           onChange={handleSearch}
         ></input>
-        <button className='button' onClick={handleClick}>Search</button>
       </div>
       {loginOrLogout}
     </>

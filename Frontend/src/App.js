@@ -76,12 +76,11 @@ function App() {
             <Results items={items} filterBy={filterBy}/>
           </>
         } />
-        <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
+        <Route path="/login" element={<Login className='setOrange' setCurrentUser={setCurrentUser} />} />
         <Route path="/register" element={<Register registerUser={(email,password)=>registerUser(email,password)} />} />
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </div>
-
   );
 }
 

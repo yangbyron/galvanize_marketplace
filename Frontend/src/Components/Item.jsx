@@ -8,11 +8,11 @@ const Item = ({ item }) => {
 
   return (
     <div className="item">
-      <h2>{name}</h2>
+      <h3>{name}</h3>
       <img className='img' src={image_path}></img>
       <p>{description}</p>
       <div>{`$${price}`}</div>
-      <button>Add to Cart</button>
+      <button className="button">Add to Cart</button>
     </div>
   );
 };
