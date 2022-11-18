@@ -48,7 +48,7 @@ function CheckoutPage(props) {
         )
       })
     }
-    <div>Subtotal:${subtotalPrice} <Link to='/'><button className='button' onClick={handleCheckout}>Checkout</button></Link> <Link to="/"><button className='button'>Return to Home</button></Link></div>
+    <div>Subtotal:${subtotalPrice.toFixed(2)} <Link to='/'><button className='button' onClick={handleCheckout}>Checkout</button></Link> <Link to="/"><button className='button'>Return to Home</button></Link></div>
     </div>
   )
 }

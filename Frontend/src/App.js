@@ -65,7 +65,7 @@ function App() {
         setItems(result)
         setAllItems(result);
       });
-  }, []);
+  }, [cart]);
 
   function handleChangeCurrentUser(user){
     setCurrentUser(oldUser=>user);
