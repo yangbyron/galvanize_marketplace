@@ -56,8 +56,8 @@ export default function FilterBar({ filterBy, setFilterBy }) {
       </button>
       <ul>{priceRangeResult}</ul>
 
-      <div>Category: {filterBy.category}</div>
-      <div>Price Range: {filterBy.priceRange}</div>
+      <div className='filterCheck'>Category: {filterBy.category}</div>
+      <div className='filterCheck'>Price Range: {filterBy.priceRange}</div>
       
     </div>
   )
