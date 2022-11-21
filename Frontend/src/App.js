@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
-import FilterBar from './Components/FilterBar';
-import Results from './Components/Results';
+import FilterBar from "./Components/FilterBar";
+import Results from "./Components/Results";
 import Login from "./Components/Login";
-import Register from './Components/Register';
-import CheckoutPage from './Components/CheckoutPage'
-import { initializeApp } from 'firebase/app'
+import Register from "./Components/Register";
+import CheckoutPage from "./Components/CheckoutPage";
+import SellerPage from "./Components/SellerPage";
+import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const firebaseConfig = {
@@ -17,8 +18,9 @@ function App() {
     storageBucket: process.env.REACT_APP_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
     appId: process.env.REACT_APP_APPID,
-    measurementId: process.env.REACT_APP_MEASUREMENTID
+    measurementId: process.env.REACT_APP_MEASUREMENTID,
   };
+  
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
@@ -28,15 +30,16 @@ function App() {
   //the user can only filter by one "category" at a time
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
+
   const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
   const [currentUser,setCurrentUser]=useState({});
   const [allItems,setAllItems] = useState([])
   const [cart, setCart] = useState([])
+  const [isSeller, setIsSeller] = useState(false);
 
-
-  const handlesetItems = (input) =>{
-    setItems(input)
-  }
+  const handlesetItems = (input) => {
+    setItems(input);
+  };
 
   function addToCart(newItem){
     //post request to DB to add user_id & item_id
@@ -62,16 +65,16 @@ function App() {
     fetch("http://localhost:4000/api/items")
       .then((response) => response.json())
       .then((result) => {
-        setItems(result)
+        setItems(result);
         setAllItems(result);
       });
   }, [cart]);
 
-  function handleChangeCurrentUser(user){
-    setCurrentUser(oldUser=>user);
+  function handleChangeCurrentUser(user) {
+    setCurrentUser((oldUser) => user);
   }
 
-  function registerUser(email,password){
+  function registerUser(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
@@ -84,23 +87,48 @@ function App() {
       console.log(errorCode + errorMessage);
     });
   }
+  let renderBuyerOrSellerPage = isSeller ? (
+    <Route path="/" element={<SellerPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
+  ) : (
+    <Route
+      path="/"
+      element={
+        <>
+          <Header
+            handlesetItems={handlesetItems}
+            allItems={allItems}
+            setCurrentUser={setCurrentUser}
+            currentUser={currentUser}
+            renderCheckoutPage={renderCheckoutPage}
+          />
+          <FilterBar setFilterBy={setFilterBy} filterBy={filterBy} />
+          <Results items={items} filterBy={filterBy} addToCart={addToCart}/>
+        </>
+      }
+    />
+  );
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={
-          <>
-            <Header handlesetItems={handlesetItems} allItems={allItems} setCurrentUser={setCurrentUser} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>
-            <FilterBar setFilterBy={setFilterBy} filterBy={filterBy}/>
-            <Results items={items} filterBy={filterBy} addToCart={addToCart}/>
-          </>
-        } />
-        <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
-        <Route path="/register" element={<Register registerUser={(email,password)=>registerUser(email,password)} />} />
+        {renderBuyerOrSellerPage}
+        <Route
+          path="/login"
+          element={
+            <Login className='setOrange' setCurrentUser={setCurrentUser} setIsSeller={setIsSeller} />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Register
+              registerUser={(email, password) => registerUser(email, password)}
+            />
+          }
+        />
         <Route path="/checkout" element={<CheckoutPage setCart={setCart} cart={cart} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>} />
       </Routes>
     </div>
-
   );
 }
 

@@ -12,7 +12,7 @@ const pool = new Pool({
 pool.connect();
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static('public'));
 app.get('/api/items', (req, res) => {
     console.log('Get Request')
     pool.query(`SELECT * FROM items WHERE is_sold=false;`)
@@ -21,11 +21,22 @@ app.get('/api/items', (req, res) => {
     })
     .catch(e => console.log(e.stack));
 })
+
+app.get("/api/items/:email", (req, res) => {
+    console.log("getting users email");
+    const email = req.params.email;
+    pool.query("select * from items where user_email = $1;", [email])
+      .then((data) => res.send(data.rows))
+      .catch((e) => {
+        res.send(e.stack);
+      });
+  });
+
 app.post("/api/createItems", (req, res) => {
-    let createItem = req.query
+    let createItem = req.body
     console.log(createItem);
-    pool.query(`INSERT INTO items (name, description, price, image_path, category, is_sold)
-    VALUES ($1, $2, $3, $4, $5, $6);`, [createItem.name, createItem.description, createItem.price, createItem.image_path, createItem.category, false])
+    pool.query(`INSERT INTO items (name, description, price, image_path, category, is_sold, user_email)
+    VALUES ($1, $2, $3, $4, $5, $6, $7);`, [createItem.name, createItem.description, createItem.price, createItem.image_path, createItem.category, false, createItem.user_email])
     .then(result => {
         res.send(result.rows);
     })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth"
 
@@ -18,6 +18,7 @@ export default function Header(props) {
   const handleSearch = (e) => {
     searchValue = e.target.value
   }
+
   const handleClick = () => {
     //get copy of old items
     const itemsName = props.allItems.filter((item) =>
@@ -28,33 +29,34 @@ export default function Header(props) {
   }
 
   let loginOrLogout = props.currentUser.uid ?
-    (<>
+    (<div className="topRightCorner">
       <Link to="/checkout">
-        <button className='button'onClick={props.renderCheckoutPage}>Cart</button>
+        <button className='headerbutton' onClick={props.renderCheckoutPage}>Cart</button>
       </Link>
-      <button className='button' onClick={signOutHandler}>Logout</button>
-    </>) :
-    (<Link to="/login">
-      <button className='button'>Login</button>
+      <button className='headerbutton' onClick={signOutHandler}>Logout</button>
+    </div>) :
+    (<Link to="/login" className='setOrange'>
+      <button className='headerbutton'>Login</button>
     </Link>)
 
   let displayCurrentUser = props.currentUser.uid ?
-    <div>Hello {props.currentUser.email}</div> :
-    <div></div>
+    <div className='topLeftCorner'>Hello {props.currentUser.email}</div> :
+    <div className='setOrange'></div>
 
   return (
-    <div className="header">
-      <h1>Galvanize Marketplace</h1>
+    <>
       {displayCurrentUser}
-      <button className='button'>Home</button>
-      <input
-        placeholder='Search'
-        type='text'
-        id="searchBar"
-        onChange={handleSearch}
-      ></input>
-      <button className='button' onClick={handleClick}>Search</button>
+      <div className="header">
+        <h1 className='galMar'>Galvanize Marketplace</h1>
+        <button className='headerbutton' onClick={handleClick}>Search</button>
+        <input
+          placeholder='🔎 Search '
+          type='text'
+          id='searchBar'
+          onChange={handleSearch}
+        ></input>
+      </div>
       {loginOrLogout}
-    </div>
+    </>
   )
 }

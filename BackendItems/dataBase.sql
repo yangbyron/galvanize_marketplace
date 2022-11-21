@@ -1,6 +1,8 @@
 DROP DATABASE IF EXISTS items_db;
 CREATE DATABASE items_db;
+
 DROP TABLE IF EXISTS items, cart;
+
 CREATE TABLE items (
     item_id SERIAL PRIMARY KEY,
     name VARCHAR(500) NOT NULL,
@@ -8,7 +10,8 @@ CREATE TABLE items (
     price DECIMAL(8, 2) NOT NULL,
     image_path VARCHAR(255) NOT NULL,
     category VARCHAR(30) NOT NULL,
-    is_sold BOOLEAN
+    is_sold BOOLEAN,
+    user_email VARCHAR(20)
 );
 CREATE TABLE cart(
     user_id TEXT,

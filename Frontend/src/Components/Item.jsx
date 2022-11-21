@@ -7,12 +7,12 @@ const Item = ({ item, addToCart }) => {
   let image_path = item.image_path;
 
   return (
-    <div>
-      <h2>{name}</h2>
-      <img src={image_path} alt={image_path}></img>
+    <div className="item">
+      <h3>{name}</h3>
+      <img className='img' src={image_path} alt={image_path}></img>
       <p>{description}</p>
       <div>{`$${price}`}</div>
-      <button onClick={() => { addToCart(item.item_id) }}>Add to Cart</button>
+      <button className="button" onClick={() => { addToCart(item.item_id) }}>Add to Cart</button>
     </div>
   );
 };
