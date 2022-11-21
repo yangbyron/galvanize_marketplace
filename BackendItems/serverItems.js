@@ -12,7 +12,7 @@ const pool = new Pool({
 pool.connect();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+//app.use(express.static('/public'));
 app.get('/api/items', (req, res) => {
     console.log('Get Request')
     pool.query(`SELECT * FROM items WHERE is_sold=false;`)
