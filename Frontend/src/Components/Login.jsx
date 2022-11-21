@@ -44,7 +44,7 @@ const Login = ({ setCurrentUser, setIsSeller }) => {
           Password:
           <input ref={passwordRef} type="password" required />
         </label>
-        <Link onClick={handleSubmit} to="/">
+        <Link to="/" onClick={handleSubmit}>
           <button>Submit</button>
         </Link>
         <Link to="/">
@@ -56,7 +56,6 @@ const Login = ({ setCurrentUser, setIsSeller }) => {
         <Link to="/register">
           <button>Register</button>
         </Link>
-        <Link to="/">Back to Home</Link>
       </label>
     </div>
   )

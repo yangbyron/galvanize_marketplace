@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static('public'));
 app.get('/api/items', (req, res) => {
     console.log('Get Request')
-    pool.query(`SELECT * FROM items;`)
+    pool.query(`SELECT * FROM items WHERE is_sold=false;`)
     .then(result => {
         res.send(result.rows);
     })
@@ -42,7 +42,18 @@ app.post("/api/createItems", (req, res) => {
     })
     .catch(e => console.log(e.stack));
 });
-
+app.patch('/api/checkout',(req,res) => {
+    req.body.map(id=>{
+    pool.query(`update items set is_sold=true where item_id=($1);`,[id])
+    })
+    res.end()
+})
+app.delete('/api/deleteAll', (req, res) => {
+    pool.query(`DELETE FROM cart;`)
+    .then(result =>{
+        res.end()
+    })
+})
 app.delete('/api/deleteItems/:id', (req, res) => {
     let itemId = req.params.id;
     console.log('Sold ID#', itemId);
@@ -50,6 +61,30 @@ app.delete('/api/deleteItems/:id', (req, res) => {
     .then(res.send('SOLD'))
     .catch(e => console.log(e.stack))
 })
+
+app.get('/api/cart/:id', (req, res) => {
+    console.log('sending cart data back')
+    let id = req.params.id
+    pool.query(`select * from items inner join cart on cart.item_id=items.item_id where cart.user_id=($1)`,[id])
+    .then((results) =>  {
+        res.send(results.rows)
+    })
+    .catch(e => console.log(e.stack));
+})
+app.post('/api/cart', (req, res) => {
+    pool.query(`INSERT INTO cart (user_id,item_id) VALUES ($1,$2)`, [req.body.user_id,req.body.item_id])
+    .then(result => {
+        res.end()
+    })
+})
+app.delete('/api/cart/', (req,res) =>{
+    console.log(req.body)
+    pool.query('DELETE from cart WHERE user_id=($1) AND item_id=($2)',[req.body.user_id,req.body.item_id])
+    .then(results =>{
+        res.end()
+    })
+})
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

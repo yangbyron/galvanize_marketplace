@@ -17,7 +17,6 @@ export default function Header(props) {
   let searchValue = ''
   const handleSearch = (e) => {
     searchValue = e.target.value
-    console.log('search value is', searchValue)
   }
 
   const handleClick = () => {
@@ -32,7 +31,7 @@ export default function Header(props) {
   let loginOrLogout = props.currentUser.uid ?
     (<div className="topRightCorner">
       <Link to="/checkout">
-        <button className='headerbutton'>Cart</button>
+        <button className='headerbutton' onClick={props.renderCheckoutPage}>Cart</button>
       </Link>
       <button className='headerbutton' onClick={signOutHandler}>Logout</button>
     </div>) :

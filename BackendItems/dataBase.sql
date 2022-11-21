@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS items_db;
 CREATE DATABASE items_db;
 
-DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS items, cart;
 
 CREATE TABLE items (
     item_id SERIAL PRIMARY KEY,
@@ -13,9 +13,12 @@ CREATE TABLE items (
     is_sold BOOLEAN,
     user_email VARCHAR(20)
 );
-
-
-
+CREATE TABLE cart(
+    user_id TEXT,
+    item_id INTEGER,
+    CONSTRAINT fk_item_id FOREIGN KEY (item_id)
+    REFERENCES items(item_id) ON DELETE CASCADE
+);
 
 INSERT INTO items (name, description, price, image_path, category, is_sold)
 VALUES 

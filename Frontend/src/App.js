@@ -30,15 +30,36 @@ function App() {
   //the user can only filter by one "category" at a time
   //the user can only filter by one "priceRange" at a time
   //the user can filter by both "category" and "priceRange" at the same time
-  const [filterBy, setFilterBy] = useState({ category: "", priceRange: "" });
-  const [currentUser, setCurrentUser] = useState({});
-  const [allItems, setAllItems] = useState([]);
+
+  const [filterBy, setFilterBy] = useState({category: "", priceRange: ""});
+  const [currentUser,setCurrentUser]=useState({});
+  const [allItems,setAllItems] = useState([])
+  const [cart, setCart] = useState([])
   const [isSeller, setIsSeller] = useState(false);
 
   const handlesetItems = (input) => {
     setItems(input);
   };
 
+  function addToCart(newItem){
+    //post request to DB to add user_id & item_id
+    //get request to setCart
+    const cartItems = {
+      user_id:currentUser.uid,
+      item_id:newItem
+    }
+    fetch('http://localhost:4000/api/cart',{
+      method:'POST',
+      headers:{'Content-Type':'Application/JSON'},
+      body:JSON.stringify(cartItems)
+    })
+  }  
+  const renderCheckoutPage  = () => {
+    fetch('http://localhost:4000/api/cart/'+ currentUser.uid) 
+    .then((result) => result.json())
+    .then((data) => {setCart(oldCart => (data))
+    })
+  }
   //this fetch call grabs all of the items in the database and sets that array of objects = to the items state variable
   useEffect(() => {
     fetch("http://localhost:4000/api/items")
@@ -47,7 +68,7 @@ function App() {
         setItems(result);
         setAllItems(result);
       });
-  }, []);
+  }, [cart]);
 
   function handleChangeCurrentUser(user) {
     setCurrentUser((oldUser) => user);
@@ -55,17 +76,16 @@ function App() {
 
   function registerUser(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        handleChangeCurrentUser(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode + errorMessage);
-      });
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      handleChangeCurrentUser(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode + errorMessage);
+    });
   }
   let renderBuyerOrSellerPage = isSeller ? (
     <Route path="/" element={<SellerPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
@@ -79,9 +99,10 @@ function App() {
             allItems={allItems}
             setCurrentUser={setCurrentUser}
             currentUser={currentUser}
+            renderCheckoutPage={renderCheckoutPage}
           />
           <FilterBar setFilterBy={setFilterBy} filterBy={filterBy} />
-          <Results items={items} filterBy={filterBy} />
+          <Results items={items} filterBy={filterBy} addToCart={addToCart}/>
         </>
       }
     />
@@ -105,7 +126,7 @@ function App() {
             />
           }
         />
-        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/checkout" element={<CheckoutPage setCart={setCart} cart={cart} currentUser={currentUser} renderCheckoutPage={renderCheckoutPage}/>} />
       </Routes>
     </div>
   );
