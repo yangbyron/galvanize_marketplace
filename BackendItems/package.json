@@ -5,7 +5,7 @@
   "main": "serverItems.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:production": "node serverItems.js"
+    "start": "node serverItems.js"
   },
   "author": "",
   "license": "ISC",
