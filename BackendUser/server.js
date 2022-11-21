@@ -5,6 +5,7 @@ const config = require("./config")[process.env.NODE_ENV || "dev"];
 const PORT = config.PORT;
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 const { Client } = require("pg");
 const client = new Client({
   connectionString: config.connectionString,
